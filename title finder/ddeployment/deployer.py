@@ -1,4 +1,6 @@
 # class that finds titles using a model 
+from btraining.training_code.b_pos_tagger import tagger as t
+from cevaluation.evaluation.evaulation_code import model
 
 class deployer:
     def __init__(self, threshold : int , model : dict , sentences : list , tags : list) -> None:
@@ -29,14 +31,17 @@ class deployer:
         #MODIFIES: self 
         #EFFECTS: uses the sentences to produce a list of POS tags. 
     def tags_producer(self)-> None:
-        #stub
-        return None
+        with open("C://Users//soghm//OneDrive//Desktop//title-finder-main//title finder//ddeployment//sentence.txt","w") as file:
+            for sentence in self.sentences:
+                 file.write(sentence + "/n")
+            self.tags = t(file)
 
         # REQUIRES: len(tags) > 0 
         #MODIFIES: self
         #EFFECTS: 
     def title_tagger(self) -> dict: 
-        
+        self.titles_finder()
+        self.tags_producer()
         '''decides how to evaluate each title'''
         title_dict = {}
         for tag in self.tags:
@@ -64,3 +69,9 @@ class deployer:
                     title_dict[seq_title] = 0
         
         return title_dict
+    
+
+
+loda = deployer(1, model.model_dict, [], [] )
+
+loda.title_tagger()

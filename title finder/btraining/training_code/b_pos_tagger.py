@@ -5,6 +5,8 @@ import a_start
 from a_start import remove_repetitions
 from a_start import series_processor 
 from a_start import sentence_extractor
+
+
 def pos_tagger(sentence : str )-> list: 
     tagged_sentences = [ ]
     for i in sentence: 
@@ -27,12 +29,15 @@ def tags_extractor(lolotags : list) -> list:
         for sot in i: 
             lotags.append(sot[1])
         lolotags_only.append(lotags)
-    with open("/Users/cedarspace/Documents/GitHub/title-finder/title finder/1.data_collection/sample titles from boas/test.txt", "w") as txt_file:
+    with open("title finder//1.data_collection//sample titles from boas//test.txt", "w") as txt_file:
         for i in lolotags_only: 
             txt_file.write(str(i) + "\n")
 
     return lolotags_only
 
 
+def tagger(sentences: str)-> list:
+    return tags_extractor(los_pos_tagger(remove_repetitions(series_processor(sentence_extractor(sentences)))))
 
-loda = tags_extractor(los_pos_tagger(remove_repetitions(series_processor(sentence_extractor("/Users/cedarspace/Documents/GitHub/title-finder/title finder/1.data_collection/sample titles from boas/titles.txt")))))
+
+#a= tagger("C://Users//soghm//OneDrive//Desktop//title-finder-main//title finder//1.data_collection//sample titles from boas//titles.txt")
