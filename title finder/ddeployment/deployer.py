@@ -1,6 +1,6 @@
 # class that finds titles using a model 
-from btraining.training_code.b_pos_tagger import tagger as t
-from cevaluation.evaluation.evaulation_code import model
+from training_file_copies import b_pos_tagger_deploy 
+from training_file_copies import model
 
 class deployer:
     def __init__(self, threshold : int , model : dict , sentences : list , tags : list) -> None:
@@ -14,64 +14,56 @@ class deployer:
         #MODIFIES: self
         #EFFECTS: extracts the tags in a txt file to a list. 
     def titles_finder(self, text : str ) -> None : 
-        n : int = 4
+        n_max : int = 4
         sentence_list =  text.split(". ")
         filtered_sentences : list = []
-        for sentence in sentence_list: 
-            low = sentence.split(" ")
-            if len(low) <= n:
-                filtered_sentences.append(sentence)
         clean_titles = []
-        for i in filtered_sentences: 
+        for i in sentence_list: 
             clean_titles.append(i.replace("\n", "").replace("|", ""))
-        self.sentences = clean_titles
+        for sentence in clean_titles: 
+            low = sentence.split(" ")
+            if len(low) <= n_max:
+                filtered_sentences.append(sentence)
+        self.sentences = filtered_sentences
 
 
         #REQUIRES: len(sentences) > 0
         #MODIFIES: self 
         #EFFECTS: uses the sentences to produce a list of POS tags. 
     def tags_producer(self)-> None:
-        with open("C://Users//soghm//OneDrive//Desktop//title-finder-main//title finder//ddeployment//sentence.txt","w") as file:
-            for sentence in self.sentences:
-                 file.write(sentence + "/n")
-            self.tags = t(file)
+        raw_tags = b_pos_tagger_deploy.tagger(self.sentences)
+        for tags in raw_tags:
+             bi_tri_list = []
+             i = 0
+             while i < len(tags) - 3:
+                 sub_list = tags[ i :  i + 2 ]
+                 bi_tri_list.append(sub_list)
+                 i = i + 2
+             sub_list = tags[ i :  i + 3 ]
+             bi_tri_list.append(sub_list)
+             self.tags.append(bi_tri_list)
 
         # REQUIRES: len(tags) > 0 
         #MODIFIES: self
         #EFFECTS: 
-    def title_tagger(self) -> dict: 
-        self.titles_finder()
-        self.tags_producer()
-        '''decides how to evaluate each title'''
-        title_dict = {}
-        for tag in self.tags:
-            if len(tag) == 1:
-                i = self.tags[0]
-                '''if there is only one sequence, evaluate it'''
-                if i in self.model and self.model[i] >= self.threshold:
-                    title_dict[i] = 1
-                else: 
-                    title_dict[i] = 0
-            else: 
-                probabilites = []
-                seq_title = ""
-                '''if more than one, use a given b given c ..etc'''
-                for sequence in tag: 
-                    seq_title += sequence
-                    if sequence in self.model and self.model[sequence] >= self.threshold: 
-                        probabilites.append(self.model[sequence])
-                product = 1
-                for i in probabilites:
-                    product *= i
-                if product >= self.threshold:
-                    title_dict[seq_title] = 1
-                else: 
-                    title_dict[seq_title] = 0
-        
-        return title_dict
+    def title_tagger(self) -> list: 
+        title = []
+        for i in range(0, len(self.tags)): 
+            tag = self.tags[i]
+            sentence = self.sentences[i]
+
+            if tag in self.model and self.model[tag] >= self.threshold:
+                title.append(sentence)
+        return title
+
+
     
 
 
-loda = deployer(1, model.model_dict, [], [] )
+loda = deployer(0.001, model.model_dict, [], [] )
 
-loda.title_tagger()
+loda.titles_finder(model.text)
+loda.tags_producer()
+print(loda.sentences)
+m = loda.title_tagger()
+print(m)
