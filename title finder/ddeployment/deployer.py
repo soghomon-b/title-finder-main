@@ -49,12 +49,28 @@ class deployer:
     def title_tagger(self) -> list: 
         title = []
         for i in range(0, len(self.tags)): 
-            tag = self.tags[i]
+            tags = self.tags[i]
             sentence = self.sentences[i]
+            if len(tags) == 1:
+                 seq = ""
+                 for small in tags[0]:
+                     seq += small + "."
+                 if seq in self.model:
+                     title.append(sentence)
+            else:
+                seq_list = []
+                for tag in tags:
+                    seq = ""
+                    for small in tag:
+                         seq += small + "."
+                    if seq in self.model:
+                        seq_list.append(seq)
+                if len(seq_list) >1:
+                    title.append(sentence)
 
-            if tag in self.model and self.model[tag] >= self.threshold:
-                title.append(sentence)
         return title
+
+        
 
 
     
