@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Input and output file names
-input_file="C:\Users\soghm\OneDrive\Desktop\title-finder-main\title finder\line skippung\test.txt"
-output_file="C:\Users\soghm\OneDrive\Desktop\title-finder-main\title finder\line skippung\test.pdf"
+input_file="C:\Users\soghm\OneDrive\Desktop\title-finder-main\title finder\line_skipping\test.txt"
+output_file="C:\Users\soghm\OneDrive\Desktop\title-finder-main\title finder\line_skipping\test.pdf"
 
 # Check if the input file exists
 if [ ! -f "$input_file" ]; then
