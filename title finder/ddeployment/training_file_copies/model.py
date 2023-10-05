@@ -150,4 +150,4 @@ along, following the line; and he also lays the straight-edge of cedar-
 ¹ See illustrations in Publications of the Jesup North Pacific Expedition, Vol. V, p. 372.
 """
 
-print(text)
+
