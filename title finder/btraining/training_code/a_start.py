@@ -1,13 +1,9 @@
-#collects data and preprocess it as follows; 
-# divides each passage into sentences when they are separated by a full-stop. 
-# assigns Part of Speech Tags to each sentence 
+#helper functions for the trainer class. Focusing on pre-processing training data. 
 
 
-# Start here, call this function to extract the sentences. 
+#REQUIRES: file to be a txt file path
+#EFFECTS: extracts training data from a txt file and stores them in a list (not used in trainer class)
 def sentence_extractor(file : str ) -> list:
-    """
-    consumes a .txt file and outputs a list of sentences
-    """
     splitters = [".", "!", "?"  ]
     zero_words = [ "a", "the", "is", "are", "was", "were", "am" ]
     final_list : list = []
@@ -22,19 +18,18 @@ def sentence_extractor(file : str ) -> list:
                 final_list.append(i)
         return final_list
         
-
+#MODIFIES: sentence
+#EFFECTS: removes the words in identity_words from the training data. 
 def sentence_processor(sentence : str ) -> str: 
-    """
-    consumes a sentence and process it to 
-    take out all unnecessary words. 
-    """
     identity_words = [ "a", "the", "is", "are", "was", "were", "am" ]
     list_of_words = sentence.split(" ")
     for i in list_of_words:
         if i in identity_words:
             sentence = sentence.replace(" "+ i + " ", " ")
     return sentence
-# now call the output of the previous function to this function. 
+
+#MODIFIES: losentence 
+#EFFECTS: applies sentence_processor to each of sentences in losentence
 def series_processor(losentence : list ) -> list: 
     """
     uses sentence_processor to process all sentences in the losentence 

@@ -1,5 +1,9 @@
 import b_pos_tagger
-from b_pos_tagger import loda
+
+
+#REQUIRES: pos_list >= 2
+#EFFECTS: groups the items of the list into tags of 2 or 3 lists. 
+# [a, b, c, d, e] will produce [a.b. , c.d.e.]
 def bigram_triagram(pos_list : list ) -> list :
     """consumes a list of tags and groups them as bigrams or trigrams"""
     bi_tri_list = []
@@ -22,7 +26,8 @@ def all_string(lop : list) -> list:
     return new_list
 
 
-
+#REQUIRES: lopos to be a list of lists. 
+#EFFECTS: applies the bigram_triagram to a list of lists. 
 def list_of_list(lopos: list ) -> list:
 
     lopos2 = []
@@ -33,13 +38,6 @@ def list_of_list(lopos: list ) -> list:
     for i in lopos2: 
         m = all_string(i)
         lopos3.append(m)
-    with open("/Users/cedarspace/Documents/GitHub/title-finder/title finder/1.data_collection/sample titles from boas/test.txt", "w") as txt_file:
-        for i in lopos3: 
-            for ii in i: 
-               txt_file.write(str(ii) + "\n")
     return lopos3
 
 
-m = list_of_list(loda)
-print("loda: " + str(loda))
-print("m: " + str(m))
