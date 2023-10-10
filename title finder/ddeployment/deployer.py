@@ -14,7 +14,7 @@ class deployer:
 
         #REQUIRES: text to be a txt file path
         #MODIFIES: self
-        #EFFECTS: extracts the tags in a txt file to a list
+        #EFFECTS: extracts the sentences in a txt file to a list
     def titles_finder(self, text : str ) -> None : 
         n_max : int = 4
         sentence_list =  text.split(". ")
