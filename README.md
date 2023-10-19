@@ -13,7 +13,12 @@ title by first converting it into POS tags (using NLTK library) and then seeing 
   - make an instance of the trainer class with your training data as a list.
   - call the tags_getter function on the instance
   - call the model_creator function on the instance
-    (note that there are helper functions that the functions above use, check them out if you want to understand how the functions work.)
+    ```python
+    training_data: list = ["CEDaR Space", "Indiginous Languages"] #add the training data here as a list. 
+    trainer : Trainer = Trainer(training_data)
+    trainer.tags_getter()
+    trainer.tags_trainer()
+    ```
 ### Evaluation 
   - after obtaining the model from training, or your own model (check examples in model.py), make an instance of the evaluator class from the file main_eval.py
   - call the title tagger and no_title tagger functions
