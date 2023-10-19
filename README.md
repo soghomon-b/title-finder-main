@@ -15,7 +15,11 @@ title by first converting it into POS tags (using NLTK library) and then seeing 
   - call the model_creator function on the instance
   - save the model you got in the model.py file in the evaluation package. 
     ```python
-    training_data: list = ["CEDaR Space", "Indiginous Languages"] #add the training data here as a list. 
+
+    #define the parameters needed for the evaluator object
+    training_data: list = ["CEDaR Space", "Indiginous Languages"] #add the training data here as a list.
+
+    #make an object instance and follow the steps above
     trainer : Trainer = Trainer(training_data)
     trainer.tags_getter()
     trainer.model_creator()
@@ -25,10 +29,15 @@ title by first converting it into POS tags (using NLTK library) and then seeing 
   - call the title tagger and no_title tagger functions
   - call the numbers functions to see a summary of fp (false positives) and fn (false negatives).
     ```python
+    #import the model 
     from model import model_dict
+
+    #define the parameters needed for the evaluator object
     optimal_threshold: int = 0.002 #the threshold of the probability of the tags to be seen as titles.
-    title: list = ["English Dialects", "Kwak'wala grammar" ] #insert phrases that are known to be titles in the scope of your data
+    title: list = ["English Dialects", "Kwak'wala grammar" ] #insert phrases that are known to be titled in the scope of your data
     no_title = ["tomorrow", "then or now" ] #insert phrases that are known to be not typically a title in the scope of your data
+
+    #make an object instance and follow the steps above
     evaluator: Evaluator = Evaluator(optimal_threshold, model_dict, title, no_title)
     evaluator.title_tagger(optimal_threshold)
     evaluator.no_title_tagger(optimal_threshold)
@@ -40,4 +49,19 @@ title by first converting it into POS tags (using NLTK library) and then seeing 
   - call the titles-finder function
   - call the tags-producer function
   - then the title-tagger function.
-  - if you want the page to be printed with the titles found on separate lines, call the page-printer function. 
+  - Call the page-printer function if you want the page to be printed with the titles found on separate lines.
+
+    ```python
+    #import the model 
+    from training_file_copies import model
+    
+    #define the parameters needed for the deployer object
+    optimal_threshold: int = 0.002 #the threshold of the probability of the tags to be seen as titles.
+    text : str = "title finder\ddeployment\82.txt"  
+    
+    #make an object instance and follow the steps above
+    deployer: Deployer = Deployer(optimal_threshold, model.model_dict)
+    deployer.titles_finder(text)
+    deployer.tags_producer()
+    deployer.title_tagger()
+    ```
