@@ -3,7 +3,7 @@ from c_bigram_trigram import list_of_list
 
 
 # training class with the tags it extracts from the training data and the model it outputs after training. 
-class trainer: 
+class Trainer: 
 
     #EFFECTS: constructs a trainer with the training data and empty POS tags and model. 
     def __init__(self, training_data: list) -> None:
@@ -11,14 +11,14 @@ class trainer:
         self.model = []
         self.training_data = training_data
 
-    #MDIFIES: this
+    #MDIFIES: self
     #EFFECTS: creates a list of tags for each sentence in the training data. 
     def tags_getter(self) -> None: 
         extracted_tags = tagger(self.training_data)
         self.tags = list_of_list(extracted_tags)
 
     #REQUIRES: len(self.tags) > 0
-    #MODIFIES: this
+    #MODIFIES: self
     #EFFECTS: produces a model with probabilites of POS tags as a dictionary 
     def model_creator(self) -> None: 
         probs_dict = {}
@@ -38,3 +38,7 @@ class trainer:
         
     
 
+training_data: list = ["CEDaR Space", "Indiginous Languages"] #add the training data here as a list. 
+trainer : Trainer = Trainer(training_data)
+trainer.tags_getter()
+trainer.model_creator()

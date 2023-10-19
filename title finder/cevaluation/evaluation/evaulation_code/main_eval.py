@@ -1,7 +1,7 @@
 
 
 # evaluates a model from training on data. 
-class evaluator:
+class Evaluator:
     #EFFECTS: constructs an evaluator. 
     # optimal_thrshold: the number above which the tag in a model is labelled as a title 
     # model: the model produced from training 
@@ -100,3 +100,13 @@ class evaluator:
         return dict_of_thresholds
     
     
+
+from model import model_dict
+
+optimal_threshold: int = 0.002 #the threshold of the probability of the tags to be seen as titles.
+title: list = ["English Dialects", "Kwak'wala grammar" ] #insert phrases that are known to be titles in the scope of your data
+no_title = ["tomorrow", "then or now" ] #insert phrases that are known to be not typically a title in the scope of your data
+evaluator: Evaluator = Evaluator(optimal_threshold, model_dict, title, no_title)
+evaluator.title_tagger(optimal_threshold)
+evaluator.no_title_tagger(optimal_threshold)
+print(evaluator.numbers(optimal_threshold))

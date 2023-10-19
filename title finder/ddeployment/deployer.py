@@ -3,13 +3,13 @@ from training_file_copies import b_pos_tagger_deploy
 from training_file_copies import model
 
 # finds titles in a passage using a model 
-class deployer:
-    def __init__(self, threshold : int , model : dict , sentences : list , tags : list, titles : list) -> None:
+class Deployer:
+    def __init__(self, threshold : int , model : dict ) -> None:
         self.threshold = threshold 
         self.model = model 
-        self.sentences = sentences
-        self.tags = tags
-        self.titles = titles
+        self.sentences : list = []
+        self.tags : list = []
+        self.titles : list = []
 
 
         #REQUIRES: text to be a txt file path
@@ -91,13 +91,16 @@ class deployer:
         
 
 
-    
+#import the model 
+from training_file_copies import model
 
+#define the parameters needed for the deployer object
+optimal_threshold: int = 0.002 #the threshold of the probability of the tags to be seen as titles.
+text : str = "title finder\ddeployment\82.txt"  
 
-loda = deployer(0.001, model.model_dict, [], [], [] )
-
-loda.titles_finder(model.text)
-loda.tags_producer()
-print(loda.sentences)
-m = loda.title_tagger()
-loda.page_printer(model.text)
+#make an object instance and follow the steps above
+deployer: Deployer = Deployer(optimal_threshold, model.model_dict)
+deployer.titles_finder(text)
+deployer.tags_producer()
+deployer.title_tagger()
+print(deployer.titles)
